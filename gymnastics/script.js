@@ -24,29 +24,16 @@ const koalasAverageScore = calculateAverageScore(
 
 console.log(`Koala's average score is: ${koalasAverageScore}.`);
 
-let minimumScore = 100;
+checkWinner(dolphinsAverageScore, koalasAverageScore);
 
-// koalasAverageScore > dolphinsAverageScore
-//   ? console.log("Koalas WIN")
-//   : console.log("Dolphins WIN");
-
-if (
-  koalasAverageScore > dolphinsAverageScore &&
-  koalasAverageScore >= minimumScore
-) {
-  console.log("Koalas WIN");
-} else if (
-  dolphinsAverageScore > koalasAverageScore &&
-  dolphinsAverageScore >= minimumScore
-) {
-  console.log("Dolphins WIN");
-} else if (
-  koalasAverageScore === dolphinsAverageScore &&
-  koalasAverageScore >= minimumScore
-) {
-  console.log("It's a DRAW");
-} else {
-  console.log("No team wins!\nAverage score must exceed 100!");
+function checkWinner(avgDolphins, avgKoalas) {
+  if (avgKoalas >= avgDolphins * 2) {
+    console.log(`Koalas win (${avgKoalas} vs. ${avgDolphins})`);
+  } else if (avgDolphins >= avgKoalas * 2) {
+    console.log(`Dolphins win (${avgDolphins} vs. ${avgKoalas})`);
+  } else {
+    console.log("No winner.");
+  }
 }
 
 function calculateAverageScore(score1, score2, score3) {
