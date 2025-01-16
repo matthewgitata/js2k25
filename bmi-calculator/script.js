@@ -1,24 +1,30 @@
-const heightMark = 1.88;
-const massMark = 95;
+const mark = {
+  firstName: "Mark",
+  lastName: "Miller",
+  mass: 78,
+  height: 1.69,
+  calcBMI: function () {
+    this.bmi = this.mass / (this.height * this.height);
+    return this.bmi;
+  },
+};
 
-const heightJohn = 1.76;
-const massJohn = 85;
+const john = {
+  firstName: "John",
+  lastName: "Smith",
+  mass: 92,
+  height: 1.95,
+  calcBMI: function () {
+    this.bmi = this.mass / (this.height * this.height);
+    return this.bmi;
+  },
+};
 
-const BMIMark = calculateBmi(massMark, heightMark);
+mark.calcBMI();
+john.calcBMI();
 
-const BMIJohn = calculateBmi(massJohn, heightJohn);
-
-markHigherBMI = BMIMark > BMIJohn ? true : false;
-
-console.log(BMIMark, BMIJohn);
-console.log(markHigherBMI);
-
-if (markHigherBMI) {
-  console.log(`Mark's BMI (${BMIMark}) is higher than John's (${BMIJohn})!`);
+if (mark.bmi > john.bmi) {
+  console.log(`Mark's BMI (${mark.bmi}) is higher than John's (${john.bmi})!`);
 } else {
-  console.log(`John's BMI (${BMIJohn}) is higher than Mark's ${BMIMark}!`);
-}
-
-function calculateBmi(mass, height) {
-  return mass / (height * height);
+  console.log(`John's BMI (${john.bmi}) is higher than Mark's ${mark.bmi}!`);
 }
