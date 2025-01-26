@@ -76,6 +76,19 @@ const displayMovements = function (movements) {
 
 displayMovements(account1.movements);
 
+const createUsernames = function (accs) {
+  accs.forEach(function (acc) {
+    acc.username = acc.owner
+      .toLowerCase()
+      .split(" ")
+      .map((name) => name[0])
+      .join("");
+  });
+};
+
+createUsernames(accounts);
+console.log(accounts);
+
 ///CODEUNI
 
 const currencies = new Map([
@@ -83,5 +96,3 @@ const currencies = new Map([
   ["EUR", "Euro"],
   ["GBP", "Pound sterling"],
 ]);
-
-const movements = [200, 450, -400, 3000, -65, -130, 70, 1300];
