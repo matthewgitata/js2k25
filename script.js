@@ -17,10 +17,15 @@ const checkDogs = function (dogsJulia, dogsKate) {
     const humanAges = ages.map((age) => (age <= 2 ? 2 * age : 16 + age * 4));
     const adults = humanAges.filter((age) => age >= 18);
     const average = adults.reduce((acc, age) => acc + age, 0) / adults.length;
-
     return average;
   };
-  console.log(calcAverageHumanAge(allDogs));
+
+  const calcAverageHumanAge2 = (ages) =>
+    ages
+      .map((age) => (age <= 2 ? 2 * age : 16 + age * 4))
+      .filter((age) => age >= 18)
+      .reduce((acc, age, i, arr) => acc + age / arr.length, 0);
+  console.log(calcAverageHumanAge2(allDogs));
 };
 
 checkDogs(dogsJulia, dogsKate);
