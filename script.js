@@ -1,31 +1,23 @@
-dogsJulia = [3, 5, 2, 12, 17];
-dogsKate = [4, 1, 5, 18, 3];
-
-const checkDogs = function (dogsJulia, dogsKate) {
-  const realDogsJulia = dogsJulia.slice(1, -2);
-
-  const allDogs = [...realDogsJulia, ...dogsKate];
-
-  allDogs.forEach(function (dog, i) {
-    if (dog >= 3) {
-      console.log(`Dog number ${i + 1} is an adult, and is ${dog} years old.`);
-    } else {
-      console.log(`Dog number ${i + 1} is still a puppy.`);
-    }
-  });
-  const calcAverageHumanAge = function (ages) {
-    const humanAges = ages.map((age) => (age <= 2 ? 2 * age : 16 + age * 4));
-    const adults = humanAges.filter((age) => age >= 18);
-    const average = adults.reduce((acc, age) => acc + age, 0) / adults.length;
-    return average;
-  };
-
-  const calcAverageHumanAge2 = (ages) =>
-    ages
-      .map((age) => (age <= 2 ? 2 * age : 16 + age * 4))
-      .filter((age) => age >= 18)
-      .reduce((acc, age, i, arr) => acc + age / arr.length, 0);
-  console.log(calcAverageHumanAge2(allDogs));
+const Car = function (make, speed) {
+  this.make = make;
+  this.speed = speed;
+};
+Car.prototype.accelerate = function () {
+  this.speed += 10;
+  console.log(`${this.make}  moving at ${this.speed} km/h`);
 };
 
-checkDogs(dogsJulia, dogsKate);
+Car.prototype.brake = function () {
+  this.speed -= 5;
+  console.log(`${this.make} moving at ${this.speed} km/h`);
+};
+
+bmw = new Car("BMW", 120);
+bmw.accelerate();
+bmw.accelerate();
+bmw.brake();
+
+mercedes = new Car("Mercedes", 95);
+mercedes.accelerate();
+mercedes.accelerate();
+mercedes.brake();
