@@ -1,37 +1,42 @@
-class Car {
-  constructor(make, speed) {
-    this.make = make;
-    this.speed = speed;
-  }
+const Car = function (make, speed) {
+  this.make = make;
+  this.speed = speed;
+};
 
-  accelerate() {
-    this.speed += 10;
-    console.log(`${this.make}  moving at ${this.speed} km/h`);
-  }
+Car.prototype.accelerate = function () {
+  this.speed += 10;
+  console.log(`${this.make} is going at ${this.speed} km/h`);
+};
 
-  brake() {
-    this.speed -= 5;
-    console.log(`${this.make} moving at ${this.speed} km/h`);
-  }
+Car.prototype.brake = function () {
+  this.speed -= 5;
+  console.log(`${this.make} is going at ${this.speed} km/h`);
+};
 
-  get speedUS() {
-    return this.speed / 1.6;
-  }
+const EV = function (make, speed, charge) {
+  Car.call(this, make, speed);
+  this.charge = charge;
+};
 
-  set speedUS(speed) {
-    this.speed = this.speed * 1.6;
-  }
-}
+// Link the protototypes
+EV.prototype = Object.create(Car.prototype);
 
-bmw = new Car("BMW", 120);
-bmw.accelerate();
-bmw.accelerate();
-bmw.brake();
+EV.prototype.chargeBattery = function (chargeTo) {
+  this.charge = chargeTo;
+};
 
-mercedes = new Car("Mercedes", 95);
-mercedes.accelerate();
-mercedes.accelerate();
-mercedes.brake();
-console.log(bmw.speedUS);
-mercedes.speedUS = 80;
-console.log(mercedes);
+EV.prototype.accelerate = function () {
+  this.speed += 20;
+  this.charge--;
+  console.log(
+    `${this.make} is going at ${this.speed} km/h, with a charge of ${this.charge}`
+  );
+};
+
+const tesla = new EV("Tesla", 120, 23);
+
+tesla.chargeBattery(90);
+console.log(tesla);
+
+tesla.brake();
+tesla.accelerate();
