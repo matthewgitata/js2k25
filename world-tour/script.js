@@ -24,7 +24,7 @@ const renderCountry = function (data, className = "") {
             <h4 class="country__region">${data.region}</h4>
             <p class="country__row"><span>👫</span>${(
               +data.population / 1000000
-            ).toFixed(1)} people</p>
+            ).toFixed(1)} m people</p>
             <p class="country__row"><span>🗣️</span>${data.languages[0].name}</p>
             <p class="country__row"><span>💰</span>${data.languages[0].name}</p>
           </div>
@@ -33,20 +33,30 @@ const renderCountry = function (data, className = "") {
   countriesContainer.insertAdjacentHTML("beforeend", html);
 };
 
+const getJSON = async function (url, errorMsg = "Something went wrong!") {
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`${errorMsg} (${response.status})`);
+  return await response.json();
+};
+
 const getCountryData = function (country) {
   // Country 1
-  fetch(`https://restcountries.eu/rest/v2/name/${country}`)
-    .then((response) => response.json())
+  getJSON(
+    `https://restcountries.eu/rest/v2/name/${country}`,
+    "Country not found!"
+  )
     .then((data) => {
       renderCountry(data[0]);
       const neighbor = data[0].borders?.[0];
 
-      if (!neighbor) return;
+      if (!neighbor) throw new Error("No neighbor found!");
 
       //   Country 2
-      fetch(`https://restcountries.eu/rest/v2/alpha/${neighbor}`);
+      return getJSON(
+        `https://restcountries.eu/rest/v2/alpha/${neighbor}`,
+        "Country not found!"
+      );
     })
-    .then((response) => response.json())
     .then((data) => renderCountry(data, "neighbor"))
     .catch((err) => {
       console.error(`error: ${err}`);
