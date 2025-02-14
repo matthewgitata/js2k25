@@ -7,20 +7,23 @@ import recipeView from "./views/recipeView.js";
 ///////////////////////////////////////
 
 const controlRecipes = async function () {
-  const id = window.location.hash.slice(1);
+  try {
+    const id = window.location.hash.slice(1);
 
-  if (!id) return;
-  recipeView.renderSpinner();
+    if (!id) return;
+    recipeView.renderSpinner();
 
-  // 1. loading the recipe
-  await model.loadRecipe(id);
+    // 1. loading the recipe
+    await model.loadRecipe(id);
 
-  // 2. rendering the recipe
-  recipeView.render(model.state.recipe);
+    // 2. rendering the recipe
+    recipeView.render(model.state.recipe);
+  } catch (err) {
+    console.error(err);
+  }
 };
 
-controlRecipes();
-
-["hashchange", "load"].forEach((ev) =>
-  window.addEventListener(ev, controlRecipes)
-);
+const init = function () {
+  recipeView.addHandlerRender(controlRecipes);
+};
+init();
